@@ -9,9 +9,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class User {
     private String id;
-    private String name;
-    private String password;
-    private int level;
+    private String username;
+    private String nickname;
 
     public String getId() {
         return id;
@@ -21,27 +20,19 @@ public class User {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getUsername() {
+        return username;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
-    public String getPassword() {
-        return password;
+    public String getNickname() {
+        return nickname;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public int getLevel() {
-        return level;
-    }
-
-    public void setLevel(int level) {
-        this.level = level;
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
     }
 }

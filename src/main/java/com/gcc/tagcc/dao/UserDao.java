@@ -11,6 +11,6 @@ import com.gcc.tagcc.untils.annotation.MyBatisDao;
 @MyBatisDao
 public interface UserDao {
 
-    public int regist(User user);
+    int register(User user);
 
 }

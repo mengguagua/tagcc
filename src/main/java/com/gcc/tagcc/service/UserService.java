@@ -15,8 +15,8 @@ public class UserService {
     @Autowired
     public UserDao userDao;
 
-    public int regist(User user){
-        return userDao.regist(user);
+    public int register(User user){
+        return userDao.register(user);
     }
 
 }

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gcc.tagcc.dao.ContentDao">
+
+    <insert id="addShareContent">
+		insert into t_share_base (
+			url_name,
+			icon,
+			url,
+			weight,
+			collection
+		) values (
+			#{urlName},
+			#{icon},
+			#{url},
+			#{weight},
+			#{collection}
+		)
+    </insert>
+    <!-- 返回集合，返回类型写List里的泛型类型 -->
+	<select id="queryShareContent" resultType="com.gcc.tagcc.entity.ShareContent">
+		select * from t_share_base limit 0,199
+	</select>
+
+</mapper>

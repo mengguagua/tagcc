@@ -2,17 +2,13 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.gcc.tagcc.dao.UserDao">
 
-	<insert id="regist">
-		insert into t_user (
-			id,
-			name,
-			password,
-			level
+	<insert id="register">
+		insert into t_user_base (
+			username,
+			nickname
 		) values (
-			#{id},
-			#{name},
-			#{password},
-			#{level}
+			#{username},
+			#{nickname}
 		)
 	</insert>
 

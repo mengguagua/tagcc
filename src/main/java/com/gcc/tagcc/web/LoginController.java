@@ -18,19 +18,15 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class LoginController {
 
     @Autowired
-    private User user;
-
-    @Autowired
     private UserService userService;
 
     @RequestMapping("/regist")
     @ResponseBody
     public Object regist(){
-        user.setId(UuidUntil.getUUID());
-        user.setName("gaocc");
-        user.setLevel(1);
-        user.setPassword("123456");
-        userService.regist(user);
+        User user = new User();
+        user.setUsername("15957108449");
+        user.setNickname("gaocc");
+        userService.register(user);
         return "登录成功";
     }
 

@@ -17,9 +17,16 @@
 			#{collection}
 		)
     </insert>
+
+	<delete id="deleteShareContent">
+		delete from t_share_base where id = #{id}
+	</delete>
+
     <!-- 返回集合，返回类型写List里的泛型类型 -->
 	<select id="queryShareContent" resultType="com.gcc.tagcc.entity.ShareContent">
-		select * from t_share_base limit 0,199
+		select
+			id,url_name as urlName,icon,url,weight,collection
+		from t_share_base limit 0,199
 	</select>
 
 </mapper>

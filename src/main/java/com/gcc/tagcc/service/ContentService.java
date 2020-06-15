@@ -30,4 +30,7 @@ public class ContentService {
     }
 
 
+    public void deleteShareContent(int id) {
+        contentDao.deleteShareContent(id);
+    }
 }

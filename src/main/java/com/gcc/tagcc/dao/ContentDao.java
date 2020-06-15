@@ -18,4 +18,6 @@ public interface ContentDao {
                         @Param("icon") String icon, @Param("urlName") String urlName, @Param("url") String url);
 
     ArrayList<ShareContent> queryShareContent();
+
+    void deleteShareContent(@Param("id") int id);
 }

@@ -20,4 +20,6 @@ public interface ContentDao {
     ArrayList<ShareContent> queryShareContent();
 
     void deleteShareContent(@Param("id") int id);
+
+    void upShareContent(String weight, int id);
 }

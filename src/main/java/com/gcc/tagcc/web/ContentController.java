@@ -52,7 +52,13 @@ public class ContentController {
         return resp;
     }
 
-    @RequestMapping("content/upload")
+    @RequestMapping("one/weight/update")
+    public Object upShareContent(@RequestBody ShareContent ret){
+        contentService.upShareContent(ret.getWeight(),ret.getId());
+        return "success";
+    }
+
+    @RequestMapping("upload")
     public Object analysisShareContent(@RequestParam("file") MultipartFile file){
         String html = "";
         if (file.isEmpty()) {

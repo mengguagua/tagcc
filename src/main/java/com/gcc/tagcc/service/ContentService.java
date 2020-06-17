@@ -33,4 +33,8 @@ public class ContentService {
     public void deleteShareContent(int id) {
         contentDao.deleteShareContent(id);
     }
+
+    public void upShareContent(String weight, int id) {
+        contentDao.upShareContent(weight, id);
+    }
 }

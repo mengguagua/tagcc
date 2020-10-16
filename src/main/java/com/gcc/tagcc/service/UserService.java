@@ -19,4 +19,8 @@ public class UserService {
         return userDao.register(user);
     }
 
+    public void login(User user) {
+        String username = user.getUsername();
+        String password = user.getPassword();
+    }
 }

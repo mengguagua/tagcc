@@ -13,4 +13,7 @@ public interface UserDao {
 
     int register(User user);
 
+    User getUserByUsername(String username);
+
+    User findUserById(String userId);
 }

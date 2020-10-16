@@ -12,4 +12,14 @@
 		)
 	</insert>
 
+	<select id="getUserByUsername" resultType="com.gcc.tagcc.entity.User">
+		select id, username, password, nickname
+		from t_user_base where username = #{username}
+	</select>
+
+	<select id="findUserById" resultType="com.gcc.tagcc.entity.User">
+		select id, username, password, nickname
+		from t_user_base where id = #{userId}
+	</select>
+
 </mapper>

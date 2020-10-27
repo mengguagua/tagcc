@@ -1,8 +1,10 @@
 package com.gcc.tagcc.web;
 
+import com.gcc.tagcc.annotation.UserLoginToken;
 import com.gcc.tagcc.entity.ShareContent;
 import com.gcc.tagcc.exception.BaseException;
 import com.gcc.tagcc.service.ContentService;
+import com.gcc.tagcc.untils.ResultUtil;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -37,32 +39,33 @@ public class ContentController {
     @RequestMapping("one/add")
     public Object addShareContent(@RequestBody ShareContent ret){
         contentService.addShareContent(ret.getWeight(),ret.getCollection(),ret.getIcon(),ret.getUrlName(),ret.getUrl());
-        return "success";
+        return ResultUtil.success("success");
     }
 
     @RequestMapping("one/delete")
     public Object deleteShareContent(@RequestBody ShareContent ret){
         contentService.deleteShareContent(ret.getId());
-        return "success";
+        return ResultUtil.success("success");
     }
 
+    @UserLoginToken
     @RequestMapping("query")
     public Object queryShareContent(HttpServletRequest req){
         ArrayList<ShareContent> resp = contentService.queryShareContent();
-        return resp;
+        return ResultUtil.success(resp);
     }
 
     @RequestMapping("one/weight/update")
     public Object upShareContent(@RequestBody ShareContent ret){
         contentService.upShareContent(ret.getWeight(),ret.getId());
-        return "success";
+        return ResultUtil.success("success");
     }
 
     @RequestMapping("upload")
     public Object analysisShareContent(@RequestParam("file") MultipartFile file){
         String html = "";
         if (file.isEmpty()) {
-            return "上传失败，请选择文件";
+            return ResultUtil.error(1003,"上传失败，请选择文件");
         }
         try {
             BufferedReader bis = new BufferedReader(new InputStreamReader(file.getInputStream()));
@@ -75,7 +78,7 @@ public class ContentController {
             html = szContent.toString();
         } catch (Exception e) {
             logger.error("open file fail ===》", e);
-            return "文件读取失败";
+            return ResultUtil.error(1004,"文件读取失败");
         }
 //        html = "<DT><H3 ITEM_ID=\"{A62AF571-6A95-4BA2-8EDD-92A8BB9743F3}\" LAST_MODIFIED=\"1526282232\" >收藏夹栏</H3>\n" +
 //                "    <DL><p>\n" +
@@ -94,9 +97,10 @@ public class ContentController {
                 contentService.addShareContent("","",icon,urlName,url);
             }
         } else {
-            throw new BaseException("-1001","Cannot import more than 200 records at a time");
+//            throw new BaseException("-1001","Cannot import more than 200 records at a time");
+            return ResultUtil.error(1005,"Cannot import more than 200 records at a time");
         }
-        return "success";
+        return ResultUtil.success("success");
     }
 
 }

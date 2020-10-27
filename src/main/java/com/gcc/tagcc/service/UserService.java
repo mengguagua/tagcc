@@ -2,12 +2,10 @@ package com.gcc.tagcc.service;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
-import com.fasterxml.jackson.databind.util.JSONPObject;
 import com.gcc.tagcc.dao.UserDao;
 import com.gcc.tagcc.entity.User;
 import com.gcc.tagcc.untils.Md5Util;
-import org.json.JSONException;
-import org.json.JSONObject;
+import com.gcc.tagcc.untils.ResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -33,17 +31,18 @@ public class UserService {
         String password = user.getPassword();
         User dbUser = userDao.getUserByUsername(username);
         if (dbUser == null) {
-            map.put("msg","用户名不存在");
+            return ResultUtil.error(1001,"用户名不存在");
         } else {
             if (!Md5Util.md5Password(password).equals(dbUser.getPassword())) {
-                map.put("msg","密码错误");
+                return ResultUtil.error(1002,"密码错误");
             } else {
                 String token = getToken(dbUser);
                 map.put("token",token);
+                dbUser.setPassword("");
                 map.put("user",dbUser);
+                return ResultUtil.success(map);
             }
         }
-        return map;
     }
 
     public User findUserById(String userId) {

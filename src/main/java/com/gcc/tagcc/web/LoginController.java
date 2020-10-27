@@ -30,7 +30,7 @@ public class LoginController {
         user.setUsername("15957108449");
         user.setNickname("gaocc");
         userService.register(user);
-        return "登录成功";
+        return "注册成功";
     }
 
     @RequestMapping("/login")

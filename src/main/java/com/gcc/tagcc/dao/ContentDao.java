@@ -15,7 +15,8 @@ import java.util.ArrayList;
 public interface ContentDao {
 
     int addShareContent(@Param("weight") BigDecimal weight, @Param("collection") BigDecimal collection,
-                        @Param("icon") String icon, @Param("urlName") String urlName, @Param("url") String url);
+                        @Param("icon") String icon, @Param("urlName") String urlName, @Param("url") String url,
+                        @Param("userId") String userId);
 
     ArrayList<ShareContent> querySelfContent(String userId);
 

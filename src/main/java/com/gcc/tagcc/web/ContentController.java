@@ -31,7 +31,7 @@ import java.util.ArrayList;
  */
 @RestController
 @RequestMapping("/share/content/")
-public class ContentController {
+public class ContentController extends BaseController {
 
     private Logger logger = LoggerFactory.getLogger(ContentController.class);
 
@@ -39,8 +39,9 @@ public class ContentController {
     ContentService contentService;
 
     @RequestMapping("one/add")
-    public Object addShareContent(@RequestBody ShareContent ret){
-        contentService.addShareContent(ret.getWeight(),ret.getCollection(),ret.getIcon(),ret.getUrlName(),ret.getUrl());
+    public Object addShareContent(@RequestBody ShareContent shareContent, HttpServletRequest req){
+        String userId = getUid(req);
+        contentService.addShareContent(shareContent, userId);
         return ResultUtil.success("success");
     }
 
@@ -54,13 +55,7 @@ public class ContentController {
     @RequestMapping("query")
     public Object querySelfContent(HttpServletRequest req){
         String token = req.getHeader("token");
-        // 获取 token 中的 userId
-        String userId;
-        try {
-            userId = JWT.decode(token).getAudience().get(0);
-        } catch (JWTDecodeException j){
-            return ResultUtil.error(1006,"未登录");
-        }
+        String userId = getUid(req);
         ArrayList<ShareContent> resp = contentService.querySelfContent(userId);
         return ResultUtil.success(resp);
     }
@@ -72,7 +67,7 @@ public class ContentController {
     }
 
     @RequestMapping("upload")
-    public Object analysisShareContent(@RequestParam("file") MultipartFile file){
+    public Object analysisShareContent(@RequestParam("file") MultipartFile file,HttpServletRequest req){
         String html = "";
         if (file.isEmpty()) {
             return ResultUtil.error(1003,"上传失败，请选择文件");
@@ -104,7 +99,11 @@ public class ContentController {
                 String url = a.attr("href");
                 String urlName = a.text();
                 String icon = a.attr("icon");
-                contentService.addShareContent("","",icon,urlName,url);
+                ShareContent shareContent = new ShareContent();
+                shareContent.setIcon(icon);
+                shareContent.setUrlName(urlName);
+                shareContent.setUrl(url);
+                contentService.addShareContent(shareContent, getUid(req));
             }
         } else {
 //            throw new BaseException("-1001","Cannot import more than 200 records at a time");

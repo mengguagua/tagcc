@@ -19,10 +19,10 @@ public class ContentService {
     @Autowired
     ContentDao contentDao;
 
-    public Object addShareContent(String weight, String collection, String icon, String urlName, String url){
-        BigDecimal wt = BigDecimalUtil.createBigDecimal(weight);
-        BigDecimal cn = BigDecimalUtil.createBigDecimal(collection);
-        return contentDao.addShareContent(wt, cn, icon, urlName, url);
+    public Object addShareContent(ShareContent shareContent, String userId){
+        BigDecimal wt = BigDecimalUtil.createBigDecimal(shareContent.getWeight());
+        BigDecimal cn = BigDecimalUtil.createBigDecimal(shareContent.getCollection());
+        return contentDao.addShareContent(wt, cn, shareContent.getIcon(), shareContent.getUrlName(), shareContent.getUrl(), userId);
     }
 
     public ArrayList<ShareContent> querySelfContent(String userId){

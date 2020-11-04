@@ -8,13 +8,15 @@
 			icon,
 			url,
 			weight,
-			collection
+			collection,
+			uid
 		) values (
 			#{urlName},
 			#{icon},
 			#{url},
 			#{weight},
-			#{collection}
+			#{collection},
+			#{userId}
 		)
     </insert>
 

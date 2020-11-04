@@ -23,10 +23,10 @@
 	</delete>
 
     <!-- 返回集合，返回类型写List里的泛型类型 -->
-	<select id="queryShareContent" resultType="com.gcc.tagcc.entity.ShareContent">
+	<select id="querySelfContent" resultType="com.gcc.tagcc.entity.ShareContent">
 		select
-			id,url_name as urlName,icon,url,weight,collection
-		from t_share_base order by weight desc limit 0,199
+			id,url_name as urlName,icon,url,weight,collection,uid
+		from t_share_base where uid = #{userId} order by weight desc limit 0,199
 	</select>
 
 	<update id="upShareContent">

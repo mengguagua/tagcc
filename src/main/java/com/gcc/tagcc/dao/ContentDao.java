@@ -17,7 +17,7 @@ public interface ContentDao {
     int addShareContent(@Param("weight") BigDecimal weight, @Param("collection") BigDecimal collection,
                         @Param("icon") String icon, @Param("urlName") String urlName, @Param("url") String url);
 
-    ArrayList<ShareContent> queryShareContent();
+    ArrayList<ShareContent> querySelfContent(String userId);
 
     void deleteShareContent(@Param("id") int id);
 

@@ -19,5 +19,6 @@ public class ShareContent {
     private String url;
     private String weight;
     private String collection;
+    private String uid;
 
 }

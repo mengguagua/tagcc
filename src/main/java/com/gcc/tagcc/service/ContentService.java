@@ -25,8 +25,8 @@ public class ContentService {
         return contentDao.addShareContent(wt, cn, icon, urlName, url);
     }
 
-    public ArrayList<ShareContent> queryShareContent(){
-        return contentDao.queryShareContent();
+    public ArrayList<ShareContent> querySelfContent(String userId){
+        return contentDao.querySelfContent(userId);
     }
 
 

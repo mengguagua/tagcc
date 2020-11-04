@@ -1,5 +1,7 @@
 package com.gcc.tagcc.web;
 
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.exceptions.JWTDecodeException;
 import com.gcc.tagcc.annotation.UserLoginToken;
 import com.gcc.tagcc.entity.ShareContent;
 import com.gcc.tagcc.exception.BaseException;
@@ -50,8 +52,16 @@ public class ContentController {
 
     @UserLoginToken
     @RequestMapping("query")
-    public Object queryShareContent(HttpServletRequest req){
-        ArrayList<ShareContent> resp = contentService.queryShareContent();
+    public Object querySelfContent(HttpServletRequest req){
+        String token = req.getHeader("token");
+        // 获取 token 中的 userId
+        String userId;
+        try {
+            userId = JWT.decode(token).getAudience().get(0);
+        } catch (JWTDecodeException j){
+            return ResultUtil.error(1006,"未登录");
+        }
+        ArrayList<ShareContent> resp = contentService.querySelfContent(userId);
         return ResultUtil.success(resp);
     }
 

@@ -41,7 +41,7 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
         if (method.isAnnotationPresent(UserLoginToken.class)) {
             UserLoginToken userLoginToken = method.getAnnotation(UserLoginToken.class);
             if (userLoginToken.required()) {
-                if (token == null) {
+                if (token == null || "null".equals(token)) {
                     throw new RuntimeException("无token，请重新登录");
                 }
                 // 获取 token 中的 userId

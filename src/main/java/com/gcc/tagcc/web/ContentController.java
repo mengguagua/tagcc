@@ -2,6 +2,7 @@ package com.gcc.tagcc.web;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.exceptions.JWTDecodeException;
+import com.gcc.tagcc.annotation.PassToken;
 import com.gcc.tagcc.annotation.UserLoginToken;
 import com.gcc.tagcc.entity.ShareContent;
 import com.gcc.tagcc.exception.BaseException;
@@ -51,10 +52,9 @@ public class ContentController extends BaseController {
         return ResultUtil.success("success");
     }
 
-    @UserLoginToken
+    @PassToken
     @RequestMapping("query")
     public Object querySelfContent(HttpServletRequest req){
-        String token = req.getHeader("token");
         String userId = getUid(req);
         ArrayList<ShareContent> resp = contentService.querySelfContent(userId);
         return ResultUtil.success(resp);

@@ -93,6 +93,12 @@
             <version>0.0.20131108.vaadin1</version>
             <scope>compile</scope>
         </dependency>
+        <!-- ip限频 切面 -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-aspects</artifactId>
+            <version>4.3.10.RELEASE</version>
+        </dependency>
     </dependencies>
 
 

@@ -76,7 +76,7 @@ public class ContentController extends BaseController {
     public Object analysisShareContent(@RequestParam("file") MultipartFile file,HttpServletRequest req){
         String html = "";
         if (file.isEmpty()) {
-            return ResultUtil.error(1003,"上传失败，请选择文件");
+            throw new BaseException("1003","上传失败，请选择文件");
         }
         try {
             BufferedReader bis = new BufferedReader(new InputStreamReader(file.getInputStream()));
@@ -89,7 +89,7 @@ public class ContentController extends BaseController {
             html = szContent.toString();
         } catch (Exception e) {
             logger.error("open file fail ===》", e);
-            return ResultUtil.error(1004,"文件读取失败");
+            throw new BaseException("1004","文件读取失败");
         }
 //        html = "<DT><H3 ITEM_ID=\"{A62AF571-6A95-4BA2-8EDD-92A8BB9743F3}\" LAST_MODIFIED=\"1526282232\" >收藏夹栏</H3>\n" +
 //                "    <DL><p>\n" +
@@ -112,8 +112,8 @@ public class ContentController extends BaseController {
                 contentService.addShareContent(shareContent, getUid(req));
             }
         } else {
-//            throw new BaseException("-1001","Cannot import more than 200 records at a time");
-            return ResultUtil.error(1005,"Cannot import more than 200 records at a time");
+            throw new BaseException("1005","Cannot import more than 200 records at a time");
+//            return ResultUtil.error(1005,"Cannot import more than 200 records at a time");
         }
         return ResultUtil.success("success");
     }

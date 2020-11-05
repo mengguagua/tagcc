@@ -8,6 +8,7 @@ import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.gcc.tagcc.annotation.PassToken;
 import com.gcc.tagcc.annotation.UserLoginToken;
 import com.gcc.tagcc.entity.User;
+import com.gcc.tagcc.exception.BaseException;
 import com.gcc.tagcc.service.UserService;
 import com.gcc.tagcc.untils.ResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,25 +43,26 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
             UserLoginToken userLoginToken = method.getAnnotation(UserLoginToken.class);
             if (userLoginToken.required()) {
                 if (token == null || "null".equals(token)) {
-                    throw new RuntimeException("无token，请重新登录");
+//                    throw new RuntimeException("无token，请重新登录");
+                    throw new BaseException("1006","无token，请重新登录");
                 }
                 // 获取 token 中的 userId
                 String userId;
                 try {
                     userId = JWT.decode(token).getAudience().get(0);
                 } catch (JWTDecodeException j){
-                    throw new RuntimeException("401");
+                    throw new BaseException("401","获取uid错误");
                 }
                 User user = userService.findUserById(userId);
                 if (user == null) {
-                    throw new RuntimeException("用户不存在，请重新登录");
+                    throw new BaseException("1007","用户不存在，请重新登录");
                 }
                 // 验证 token
                 JWTVerifier jwtVerifier = JWT.require(Algorithm.HMAC256(user.getPassword())).build();
                 try {
                     jwtVerifier.verify(token);
                 } catch (JWTVerificationException e) {
-                    throw new RuntimeException("401");
+                    throw new BaseException("1008","token验证错误");
                 }
             }
         }

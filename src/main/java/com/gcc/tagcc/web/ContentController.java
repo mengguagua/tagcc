@@ -3,6 +3,7 @@ package com.gcc.tagcc.web;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.exceptions.JWTDecodeException;
 import com.gcc.tagcc.annotation.PassToken;
+import com.gcc.tagcc.annotation.RequestLimit;
 import com.gcc.tagcc.annotation.UserLoginToken;
 import com.gcc.tagcc.entity.ShareContent;
 import com.gcc.tagcc.exception.BaseException;
@@ -39,6 +40,8 @@ public class ContentController extends BaseController {
     @Autowired
     ContentService contentService;
 
+    /* 最多调用100次，默认是10分钟 */
+    @RequestLimit(count = 100)
     @RequestMapping("one/add")
     public Object addShareContent(@RequestBody ShareContent shareContent, HttpServletRequest req){
         String userId = getUid(req);
@@ -46,6 +49,7 @@ public class ContentController extends BaseController {
         return ResultUtil.success("success");
     }
 
+    @RequestLimit(count = 20)
     @RequestMapping("one/delete")
     public Object deleteShareContent(@RequestBody ShareContent ret){
         contentService.deleteShareContent(ret.getId());
@@ -60,12 +64,14 @@ public class ContentController extends BaseController {
         return ResultUtil.success(resp);
     }
 
+    @RequestLimit(count = 20)
     @RequestMapping("one/weight/update")
     public Object upShareContent(@RequestBody ShareContent ret){
         contentService.upShareContent(ret.getWeight(),ret.getId());
         return ResultUtil.success("success");
     }
 
+    @RequestLimit(count = 3)
     @RequestMapping("upload")
     public Object analysisShareContent(@RequestParam("file") MultipartFile file,HttpServletRequest req){
         String html = "";

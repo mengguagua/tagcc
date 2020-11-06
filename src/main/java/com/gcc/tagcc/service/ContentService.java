@@ -16,6 +16,9 @@ import java.util.ArrayList;
 @Service
 public class ContentService {
 
+    // 游客id
+    private static final String tourist = "99999999";
+
     @Autowired
     ContentDao contentDao;
 
@@ -36,5 +39,9 @@ public class ContentService {
 
     public void upShareContent(String weight, int id) {
         contentDao.upShareContent(weight, id);
+    }
+
+    public void addTourist(ShareContent shareContent) {
+        contentDao.addTourist(shareContent.getUrl(),shareContent.getUrlName(),tourist);
     }
 }

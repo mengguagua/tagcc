@@ -13,6 +13,7 @@ public class WebConfigurer implements WebMvcConfigurer {
      */
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
+        // 所有请求都拦截，但jwt逻辑实际只鉴权有 @UserLoginToken 注解的方法
         registry.addInterceptor(authenticationInterceptor()).addPathPatterns("/**");
     }
     @Bean

@@ -61,7 +61,7 @@ public class RequestLimitInterceptor {
         }
         if (count > limit.count()) {
             logger.info("用户IP[" + ip + "]访问地址[" + url + "]超过了限定的次数[" + limit.count() + "]");
-            throw new BaseException("1010", "超过了限定的次数");
+            throw new BaseException("1010", "操作太频繁了");
         }
 
     }

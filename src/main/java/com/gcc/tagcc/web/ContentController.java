@@ -40,7 +40,9 @@ public class ContentController extends BaseController {
     @Autowired
     ContentService contentService;
 
-    /* 最多调用100次，默认是10分钟 */
+    /* 最多调用100次，默认是10分钟
+    * 限频需要使用HttpServletRequest
+    * */
     @RequestLimit(count = 100)
     @RequestMapping("one/add")
     public Object addShareContent(@RequestBody ShareContent shareContent, HttpServletRequest req){
@@ -51,8 +53,8 @@ public class ContentController extends BaseController {
 
     @RequestLimit(count = 20)
     @RequestMapping("one/delete")
-    public Object deleteShareContent(@RequestBody ShareContent ret){
-        contentService.deleteShareContent(ret.getId());
+    public Object deleteShareContent(@RequestBody ShareContent shareContent, HttpServletRequest req){
+        contentService.deleteShareContent(shareContent.getId());
         return ResultUtil.success("success");
     }
 
@@ -64,9 +66,16 @@ public class ContentController extends BaseController {
         return ResultUtil.success(resp);
     }
 
+    @RequestLimit(count = 10)
+    @RequestMapping("tourist/add")
+    public Object addTourist(@RequestBody ShareContent shareContent, HttpServletRequest req){
+        contentService.addTourist(shareContent);
+        return ResultUtil.success("success");
+    }
+
     @RequestLimit(count = 20)
     @RequestMapping("one/weight/update")
-    public Object upShareContent(@RequestBody ShareContent ret){
+    public Object upShareContent(@RequestBody ShareContent ret, HttpServletRequest req){
         contentService.upShareContent(ret.getWeight(),ret.getId());
         return ResultUtil.success("success");
     }

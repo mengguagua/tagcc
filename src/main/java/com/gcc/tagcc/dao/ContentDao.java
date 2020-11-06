@@ -23,4 +23,6 @@ public interface ContentDao {
     void deleteShareContent(@Param("id") int id);
 
     void upShareContent(String weight, int id);
+
+    void addTourist(String url, String urlName, String userId);
 }

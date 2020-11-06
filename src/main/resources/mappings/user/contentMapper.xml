@@ -20,6 +20,18 @@
 		)
     </insert>
 
+	<insert id="addTourist">
+		insert into t_share_base (
+			url_name,
+			url,
+			uid
+		) values (
+			#{urlName},
+			#{url},
+			#{userId}
+		)
+	</insert>
+
 	<delete id="deleteShareContent">
 		delete from t_share_base where id = #{id}
 	</delete>

@@ -1,10 +1,8 @@
 package com.gcc.tagcc.web;
 
-import com.auth0.jwt.JWT;
-import com.auth0.jwt.exceptions.JWTDecodeException;
 import com.gcc.tagcc.annotation.PassToken;
 import com.gcc.tagcc.annotation.RequestLimit;
-import com.gcc.tagcc.annotation.UserLoginToken;
+import com.gcc.tagcc.entity.Email;
 import com.gcc.tagcc.entity.ShareContent;
 import com.gcc.tagcc.exception.BaseException;
 import com.gcc.tagcc.service.ContentService;
@@ -48,14 +46,14 @@ public class ContentController extends BaseController {
     public Object addShareContent(@RequestBody ShareContent shareContent, HttpServletRequest req){
         String userId = getUid(req);
         contentService.addShareContent(shareContent, userId);
-        return ResultUtil.success("success");
+        return ResultUtil.success();
     }
 
     @RequestLimit(count = 20)
     @RequestMapping("one/delete")
     public Object deleteShareContent(@RequestBody ShareContent shareContent, HttpServletRequest req){
         contentService.deleteShareContent(shareContent.getId());
-        return ResultUtil.success("success");
+        return ResultUtil.success();
     }
 
     @PassToken
@@ -70,14 +68,29 @@ public class ContentController extends BaseController {
     @RequestMapping("tourist/add")
     public Object addTourist(@RequestBody ShareContent shareContent, HttpServletRequest req){
         contentService.addTourist(shareContent);
-        return ResultUtil.success("success");
+        return ResultUtil.success();
     }
 
     @RequestLimit(count = 20)
     @RequestMapping("one/weight/update")
     public Object upShareContent(@RequestBody ShareContent ret, HttpServletRequest req){
         contentService.upShareContent(ret.getWeight(),ret.getId());
-        return ResultUtil.success("success");
+        return ResultUtil.success();
+    }
+
+    @RequestLimit(count = 10)
+    @RequestMapping("email/send")
+    public Object sendEmail(@RequestBody Email email, HttpServletRequest req){
+        String time = String.valueOf(System.currentTimeMillis());
+        String code = time.substring(time.length() - 6);
+        pushCode(req, email.getTo(), code);
+        email.setFrom("15957108449@163.com");
+        email.setTo(email.getTo());
+        code = code.concat("-The effective time is 5 minutes");
+        email.setSubject("-验证码-");
+        email.setText(code);
+        sendSimpleEmail(email);
+        return ResultUtil.success();
     }
 
     @RequestLimit(count = 3)
@@ -124,7 +137,7 @@ public class ContentController extends BaseController {
             throw new BaseException("1005","Cannot import more than 200 records at a time");
 //            return ResultUtil.error(1005,"Cannot import more than 200 records at a time");
         }
-        return ResultUtil.success("success");
+        return ResultUtil.success();
     }
 
 }

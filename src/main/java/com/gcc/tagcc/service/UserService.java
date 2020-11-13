@@ -22,6 +22,8 @@ public class UserService {
     public UserDao userDao;
 
     public int register(User user){
+        String password = Md5Util.md5Password(user.getPassword());
+        user.setPassword(password);
         return userDao.register(user);
     }
 

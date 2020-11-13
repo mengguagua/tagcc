@@ -1,16 +1,14 @@
 package com.gcc.tagcc.web;
 
 
+import com.gcc.tagcc.annotation.RequestLimit;
 import com.gcc.tagcc.entity.User;
 import com.gcc.tagcc.service.UserService;
-import com.gcc.tagcc.untils.UuidUntil;
-import org.json.JSONException;
+import com.gcc.tagcc.untils.ResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
 
 
 /**
@@ -19,21 +17,24 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/base/")
-public class LoginController {
+public class LoginController extends BaseController{
 
     @Autowired
     private UserService userService;
 
-    @RequestMapping("/regist")
-    public Object regist(){
-        User user = new User();
-        user.setUsername("15957108449");
-        user.setNickname("gaocc");
-        userService.register(user);
-        return "注册成功";
+    @RequestLimit(count = 10, time = 1000 * 60 * 60 * 24)
+    @RequestMapping("register")
+    public Object register(HttpServletRequest req, @RequestBody User user){
+        Boolean ret = checkCode(req, user.getUsername(), user.getCode());
+        if (ret) {
+            userService.register(user);
+        } else {
+            return ResultUtil.error(1010,"验证码错误");
+        }
+        return ResultUtil.success();
     }
 
-    @RequestMapping("/login")
+    @RequestMapping("login")
     public Object login(@RequestBody User user) {
         Object result = userService.login(user);
         return result;

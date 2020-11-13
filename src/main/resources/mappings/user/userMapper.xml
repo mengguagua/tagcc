@@ -5,10 +5,12 @@
 	<insert id="register">
 		insert into t_user_base (
 			username,
-			nickname
+			nickname,
+			password
 		) values (
 			#{username},
-			#{nickname}
+			#{username},
+			#{password}
 		)
 	</insert>
 

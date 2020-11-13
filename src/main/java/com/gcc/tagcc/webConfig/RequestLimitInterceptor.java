@@ -47,7 +47,7 @@ public class RequestLimitInterceptor {
             redisTemplate.put(key, redisTemplate.get(key) + 1);
         }
         int count = redisTemplate.get(key);
-        if (count > 0) {
+        if (count == 1) {
             //创建一个定时器
             Timer timer = new Timer();
             TimerTask timerTask = new TimerTask() {

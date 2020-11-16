@@ -20,7 +20,7 @@
 		)
     </insert>
 
-	<insert id="addTourist">
+	<insert id="addTouristShareContent">
 		insert into t_share_base (
 			url_name,
 			url,

@@ -35,6 +35,8 @@ public class ContentController extends BaseController {
 
     private Logger logger = LoggerFactory.getLogger(ContentController.class);
 
+    private final String emailAddress = "15957108449@163.com";
+
     @Autowired
     ContentService contentService;
 
@@ -65,9 +67,9 @@ public class ContentController extends BaseController {
     }
 
     @RequestLimit(count = 10)
-    @RequestMapping("tourist/add")
-    public Object addTourist(@RequestBody ShareContent shareContent, HttpServletRequest req){
-        contentService.addTourist(shareContent);
+    @RequestMapping("tourist/one/add")
+    public Object addTouristShareContent(@RequestBody ShareContent shareContent, HttpServletRequest req){
+        contentService.addTouristShareContent(shareContent);
         return ResultUtil.success();
     }
 
@@ -84,7 +86,7 @@ public class ContentController extends BaseController {
         String time = String.valueOf(System.currentTimeMillis());
         String code = time.substring(time.length() - 6);
         pushCode(req, email.getTo(), code);
-        email.setFrom("15957108449@163.com");
+        email.setFrom(emailAddress);
         email.setTo(email.getTo());
         code = code.concat("-The effective time is 5 minutes");
         email.setSubject("-验证码-");

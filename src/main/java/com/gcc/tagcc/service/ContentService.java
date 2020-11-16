@@ -41,7 +41,7 @@ public class ContentService {
         contentDao.upShareContent(weight, id);
     }
 
-    public void addTourist(ShareContent shareContent) {
-        contentDao.addTourist(shareContent.getUrl(),shareContent.getUrlName(),tourist);
+    public void addTouristShareContent(ShareContent shareContent) {
+        contentDao.addTouristShareContent(shareContent.getUrl(),shareContent.getUrlName(),tourist);
     }
 }

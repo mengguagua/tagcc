@@ -28,8 +28,11 @@ public class ContentService {
         return contentDao.addShareContent(wt, cn, shareContent.getIcon(), shareContent.getUrlName(), shareContent.getUrl(), userId);
     }
 
-    public ArrayList<ShareContent> querySelfContent(String userId){
-        return contentDao.querySelfContent(userId);
+    public ArrayList<ShareContent> querySelfContent(String userId, String keyword){
+        if (keyword.trim().isEmpty()) {
+            return contentDao.querySelfContent(userId);
+        }
+        return contentDao.querySelfLikeContent(userId, keyword);
     }
 
 

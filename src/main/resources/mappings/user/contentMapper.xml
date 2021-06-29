@@ -43,6 +43,13 @@
 		from t_share_base where uid = #{userId} order by weight desc limit 0,199
 	</select>
 
+	<!--  模糊查询列表	-->
+	<select id="querySelfLikeContent" resultType="com.gcc.tagcc.entity.ShareContent">
+		select
+			id,url_name as urlName,icon,url,weight,collection,uid
+		from t_share_base where uid = #{userId} and url_name like "%"#{keyword}"%" order by weight desc limit 0,199
+	</select>
+
 	<update id="upShareContent">
 		update
 			t_share_base set weight = #{weight}

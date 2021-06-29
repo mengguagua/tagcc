@@ -62,7 +62,8 @@ public class ContentController extends BaseController {
     @RequestMapping("query")
     public Object querySelfContent(HttpServletRequest req){
         String userId = getUid(req);
-        ArrayList<ShareContent> resp = contentService.querySelfContent(userId);
+        String keyword = req.getParameter("keyword");
+        ArrayList<ShareContent> resp = contentService.querySelfContent(userId, keyword);
         return ResultUtil.success(resp);
     }
 

@@ -25,4 +25,6 @@ public interface ContentDao {
     void upShareContent(String weight, int id);
 
     void addTouristShareContent(String url, String urlName, String userId);
+
+    ArrayList<ShareContent> querySelfLikeContent(String userId, String keyword);
 }

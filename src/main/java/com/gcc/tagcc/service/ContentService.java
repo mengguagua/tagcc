@@ -29,7 +29,7 @@ public class ContentService {
     }
 
     public ArrayList<ShareContent> querySelfContent(String userId, String keyword){
-        if (keyword.trim().isEmpty()) {
+        if (keyword == null || keyword.trim().isEmpty()) {
             return contentDao.querySelfContent(userId);
         }
         return contentDao.querySelfLikeContent(userId, keyword);

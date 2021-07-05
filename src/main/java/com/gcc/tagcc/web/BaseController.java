@@ -26,7 +26,7 @@ public class BaseController {
         String token = request.getHeader("token");
         // 获取 token 中的 userId
         try {
-            if("null".equals(token)) {
+            if("null".equals(token) || token == null) {
                 return tourist;
             }
             return JWT.decode(token).getAudience().get(0);
